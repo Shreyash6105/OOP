@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Item {
+    int code;
+    string name;
+    double cost;
+    int quantity;
+
+    bool operator<(const Item& other) const { return code < other.code; }
+    friend ostream& operator<<(ostream& out, const Item& item) {
+        return out << item.code << " " << item.name << " " << item.cost << " " << item.quantity;
+    }
+};
+
+int main() {
+    vector<Item> items = {{1001, "Item A", 50.5, 10}, {1003, "Item C", 30.0, 15}, {1002, "Item B", 45.0, 5}};
+    
+    sort(items.begin(), items.end());
+    for (const auto& item : items) cout << item << endl;
+    
+    auto it = find_if(items.begin(), items.end(), [](const Item& item) { return item.code == 1002; });
+    if (it != items.end()) cout << "Found: " << *it << endl; else cout << "Item not found." << endl;
+
+    return 0;
+}
